@@ -16,13 +16,12 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
-    screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
-    screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
-
     public Player(GamePanel gp, KeyHandler keyH) {
 
         this.gp = gp;
         this.keyH = keyH;
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
 
         setDefaultValues();
@@ -51,19 +50,6 @@ public class Player extends Entity{
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    // Metodo helper per listare i file
-    private void listFiles(java.io.File dir, String indent) {
-        java.io.File[] files = dir.listFiles();
-        if (files != null) {
-            for (java.io.File file : files) {
-                System.out.println(indent + file.getName());
-                if (file.isDirectory()) {
-                    listFiles(file, indent + "  ");
-                }
-            }
         }
     }
 
@@ -140,6 +126,6 @@ public class Player extends Entity{
                     }
                     break;
             }
-            g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 }

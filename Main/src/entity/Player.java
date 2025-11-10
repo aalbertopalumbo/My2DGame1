@@ -29,8 +29,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = 100;
-        worldY = 100;
+        worldX = gp.tileSize * gp.maxWorldCol/2;
+        worldY = gp.tileSize * gp.maxWorldRow/2;
         speed = 4;
         direction = "down";
     }

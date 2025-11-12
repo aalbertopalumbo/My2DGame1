@@ -13,8 +13,8 @@ import java.io.InputStreamReader;
 public class TileManager {
 
     GamePanel gp;
-    Tile[] tile;
-    int mapTileNum[][];
+    public Tile[] tile;
+    public int mapTileNum[][];
     int tilesAnimationCounter = 0;
     int tilesAnimationSpeed = 60;
     int currentTileSprite = 0;
@@ -65,11 +65,9 @@ public class TileManager {
 
             tile[8] = new Tile();
             tile[8].image = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/tiles/earth_1.png"));
-            tile[8].collision = true;
 
             tile[9] = new Tile();
             tile[9].image = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/tiles/sand_1.png"));
-            tile[9].collision = true;
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -16,13 +16,14 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
-    screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
-    screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
-
     public Player(GamePanel gp, KeyHandler keyH) {
 
         this.gp = gp;
         this.keyH = keyH;
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+
+        solidArea = new Rectangle(8, 16, 32, 32);
 
 
         setDefaultValues();
@@ -30,8 +31,8 @@ public class Player extends Entity{
     }
 
     public void setDefaultValues() {
-        worldX = 100;
-        worldY = 100;
+        worldX = gp.tileSize * gp.maxWorldCol/2;
+        worldY = gp.tileSize * gp.maxWorldRow/2;
         speed = 4;
         direction = "down";
     }
@@ -54,19 +55,6 @@ public class Player extends Entity{
         }
     }
 
-    // Metodo helper per listare i file
-    private void listFiles(java.io.File dir, String indent) {
-        java.io.File[] files = dir.listFiles();
-        if (files != null) {
-            for (java.io.File file : files) {
-                System.out.println(indent + file.getName());
-                if (file.isDirectory()) {
-                    listFiles(file, indent + "  ");
-                }
-            }
-        }
-    }
-
     public void update() {
 
         if (keyH.upPressed == true || keyH.downPressed == true ||
@@ -74,19 +62,40 @@ public class Player extends Entity{
 
             if (keyH.upPressed == true) {
                 direction = "up";
-                worldY -= speed;
+
             }
             if (keyH.downPressed == true) {
                 direction = "down";
-                worldY += speed;
+
             }
             if (keyH.leftPressed == true) {
                 direction = "left";
-                worldX -= speed;
+
             }
             if (keyH.rightPressed == true) {
                 direction = "right";
-                worldX += speed;
+
+            }
+
+            //check tile collision
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+            //if collision is false, player can move
+            if (collisionOn == false) {
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
             }
 
             spriteCounter++;
@@ -140,6 +149,6 @@ public class Player extends Entity{
                     }
                     break;
             }
-            g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 }
